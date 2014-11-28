@@ -26,7 +26,7 @@ class FW_Extension_Population_Method_Posts extends FW_Extension implements Popul
 		$population_options = array();
 		$post_categories = $this->get_post_categories();
 		if (empty($post_categories)) {
-			$message = sprintf(__('%s extension needs configured post categories in post types ', 'fw'), ucwords(str_replace('-', ' ', $this->get_name())));
+			$message = sprintf(__('%s extension needs configured post categories in post types', 'fw'), ucwords(str_replace('-', ' ', $this->get_name())));
 			wp_die($message);
 		} else {
 			$population_options = array(

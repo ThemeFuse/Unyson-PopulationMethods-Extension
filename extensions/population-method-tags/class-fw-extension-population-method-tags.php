@@ -26,7 +26,7 @@ class FW_Extension_Population_Method_Tags extends FW_Extension implements Popula
 		$population_options = array();
 		$post_categories = $this->get_post_categories();
 		if (empty($post_categories)) {
-			$message = sprintf(__('%s extension needs configured tags in post types ', 'fw'), ucwords(str_replace('-', ' ', $this->get_name())));
+			$message = sprintf(__('%s extension needs configured tags in post types', 'fw'), ucwords(str_replace('-', ' ', $this->get_name())));
 			wp_die($message);
 		} else {
 			$population_options = array(

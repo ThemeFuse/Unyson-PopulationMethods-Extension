@@ -30,7 +30,7 @@ class FW_Extension_Population_Method_Custom extends FW_Extension implements Popu
 
 		$options = array(
 			'wrapper-population-method-custom' => array(
-				'title' => __('Click to edit / Drag to reorder <span class="fw-slide-spinner spinner"></span>', 'fw'),
+				'title' => __('Click to edit / Drag to reorder', 'fw') . ' <span class="fw-slide-spinner spinner"></span>',
 				'type' => 'box',
 				'options' => array(
 					'custom-slides' =>
@@ -51,7 +51,7 @@ class FW_Extension_Population_Method_Custom extends FW_Extension implements Popu
 										'selected' => array(
 											'type' => 'radio',
 											'attr' => array('class' => 'multimedia-radio-controls'),
-											'label' => __('Choose ', 'fw'),
+											'label' => __('Choose', 'fw'),
 											'choices' => $media_type_choices,
 											'value' => $media_type_values
 										)),
