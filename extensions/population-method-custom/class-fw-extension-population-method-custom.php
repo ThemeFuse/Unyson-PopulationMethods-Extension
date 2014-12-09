@@ -38,7 +38,7 @@ class FW_Extension_Population_Method_Custom extends FW_Extension implements Popu
 							'label' => false,
 							'desc' => false,
 							'type' => 'slides',
-							'multimedia_type' => $media_type_values,
+							'multimedia_type' => array_keys($media_type_choices),
 							'thumb_size' => array('height' => 75, 'width' => 138),
 							'slides_options' => array(
 								'multimedia' => array(

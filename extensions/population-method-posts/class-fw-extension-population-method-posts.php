@@ -143,6 +143,7 @@ class FW_Extension_Population_Method_Posts extends FW_Extension implements Popul
 				setup_postdata($post);
 				array_push($collector['slides'], array(
 					'title' => get_the_title(),
+					'multimedia_type' => $this->multimedia_types[0],
 					'src' => wp_get_attachment_url(get_post_thumbnail_id($post->ID)),
 					'desc' => get_the_excerpt(),
 					'extra' => array(
