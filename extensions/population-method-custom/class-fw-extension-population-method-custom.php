@@ -155,6 +155,7 @@ class FW_Extension_Population_Method_Custom extends FW_Extension implements Popu
 					'title' => !empty($slide['title']) ? $slide['title'] : '',
 					'multimedia_type' => $slide['multimedia']['selected'],
 					'src' => ($slide['multimedia']['selected'] === 'video') ? $slide['multimedia'][$slide['multimedia']['selected']]['src'] : $slide['multimedia'][$slide['multimedia']['selected']]['src']['url'],
+					'attachment_id' =>($slide['multimedia']['selected'] === 'image') ?$slide['multimedia'][$slide['multimedia']['selected']]['src']['attachment_id']: '',
 					'desc' => !empty($slide['desc']) ? $slide['desc'] : '',
 					'extra' => isset($slide['extra-options']) ? $slide['extra-options'] : array()
 				));
