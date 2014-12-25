@@ -10,26 +10,6 @@ class FW_Extension_Population_Method extends FW_Extension
 	 */
 	public function _init()
 	{
-		if (is_admin()) {
-			add_action('admin_enqueue_scripts', array($this, '_admin_action_enqueue_static'));
-		}
-	}
-
-	/**
-	 * @internal
-	 */
-	public function _admin_action_enqueue_static()
-	{
-		$screen = get_current_screen();
-		if ($screen->id === fw()->extensions->get('slider')->get_post_type()) {
-			wp_enqueue_style('fw-selectize');
-			wp_enqueue_script(
-				'fw-population-method-categories',
-				$this->get_declared_URI('/static/js/'. $this->get_name() .'.js'),
-				array('fw-selectize'),
-				fw()->manifest->get_version()
-			);
-		}
 	}
 
 	public function get_population_methods($media_types)
