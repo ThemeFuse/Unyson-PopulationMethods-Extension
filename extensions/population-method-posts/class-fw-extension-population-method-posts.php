@@ -123,7 +123,7 @@ class FW_Extension_Population_Method_Posts extends FW_Extension implements Popul
 			$slider_name = $meta['slider']['selected'];
 			$population_method = $meta['slider'][$slider_name]['population-method'];
 			$posts_id = $meta['post_types'][$meta['post_types']['selected']]['posts_id'];
-			$post_type = $meta['categories']['selected'];
+			$post_type = $meta['post_types']['selected'];
 
 			$collector = array(
 				'slides' => array(),
