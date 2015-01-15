@@ -136,7 +136,7 @@ class FW_Extension_Population_Method_Tags extends FW_Extension implements Popula
 					'slider_type' => $slider_name,
 					'population_method' => $population_method,
 					'post_id' => $post_id,
-					'extra' => array(),
+					'extra' => isset($meta['custom-settings']) ? $meta['custom-settings'] : array(),
 				)
 			);
 
@@ -184,7 +184,9 @@ class FW_Extension_Population_Method_Tags extends FW_Extension implements Popula
 					'multimedia_type' => $this->multimedia_types[0],
 					'src' => wp_get_attachment_url(get_post_thumbnail_id(get_the_ID())),
 					'desc' => get_the_excerpt(),
-					'extra' => array()
+					'extra' => array(
+						'post_id' => $post->ID
+					)
 				));
 			}
 

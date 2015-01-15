@@ -123,6 +123,7 @@ class FW_Extension_Population_Method_Posts extends FW_Extension implements Popul
 			$slider_name = $meta['slider']['selected'];
 			$population_method = $meta['slider'][$slider_name]['population-method'];
 			$posts_id = $meta['post_types'][$meta['post_types']['selected']]['posts_id'];
+			$post_type = $meta['categories']['selected'];
 
 			$collector = array(
 				'slides' => array(),
@@ -131,18 +132,19 @@ class FW_Extension_Population_Method_Posts extends FW_Extension implements Popul
 					'slider_type' => $slider_name,
 					'population_method' => $population_method,
 					'post_id' => $post_id,
-					'extra' => array(),
+					'extra' => isset($meta['custom-settings']) ? $meta['custom-settings'] : array(),
 				)
 			);
 
 			$posts = get_posts(array(
-				'post_in' => $posts_id
+				'post_in' => $posts_id,
+				'post_type' => $post_type
 			));
 
 			foreach ($posts as $post) {
 				setup_postdata($post);
 				array_push($collector['slides'], array(
-					'title' => get_the_title(),
+					'title' => get_the_title($post->ID),
 					'multimedia_type' => $this->multimedia_types[0],
 					'src' => wp_get_attachment_url(get_post_thumbnail_id($post->ID)),
 					'desc' => get_the_excerpt(),

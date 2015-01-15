@@ -178,14 +178,15 @@ class FW_Extension_Population_Method_Categories extends FW_Extension implements 
 
 			while ($the_query->have_posts()) {
 				$the_query->the_post();
-
+				$post_id = get_the_ID();
 				array_push($collector['slides'], array(
-					'title' => get_the_title(),
+					'title' => get_the_title($post_id),
 					'multimedia_type' => $this->multimedia_types[0],
-					'src' => wp_get_attachment_url(get_post_thumbnail_id(get_the_ID())),
+					'src' => wp_get_attachment_url(get_post_thumbnail_id($post_id)),
 					'desc' => get_the_excerpt(),
-					'post_id' => get_the_ID(),
-					'extra' => array()
+					'extra' => array(
+						'post_id' => $post_id
+					)
 				));
 			}
 
