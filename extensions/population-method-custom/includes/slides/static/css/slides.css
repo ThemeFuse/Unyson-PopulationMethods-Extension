@@ -99,6 +99,7 @@
 }
 .fw-backend-option-type-slides > .fw-backend-option-input > .fw-inner {
 	width: 100% !important;
+	max-width: 100% !important;
 }
 .fw-backend-option-type-slides{
 	padding: 0 !important;
