@@ -47,24 +47,39 @@ class FW_Extension_Population_Method extends FW_Extension
 	{
 		$selected = fw_get_db_post_option($post_id, 'slider/selected');
 		$population_method = fw_get_db_post_option($post_id, 'slider/'.$selected.'/population-method');
+		$population_method_instance = $this->get_child('population-method-' . $population_method);
 
-		return $this->get_child('population-method-' . $population_method)->get_population_method();
+		if ($population_method_instance) {
+			return $population_method_instance->get_population_method();
+		} else {
+			return array('_unknown' => sprintf(__('Population method %s does not exist', 'fw'), $population_method));
+		}
 	}
 
 	public function get_number_of_images($post_id)
 	{
 		$selected = fw_get_db_post_option($post_id, 'slider/selected');
 		$population_method = fw_get_db_post_option($post_id, 'slider/'.$selected.'/population-method');
+		$population_method_instance = $this->get_child('population-method-' . $population_method);
 
-		return $this->get_child('population-method-' . $population_method)->get_number_of_images($post_id);
+		if ($population_method_instance) {
+			return $population_method_instance->get_number_of_images($post_id);
+		} else {
+			return 0;
+		}
 	}
 
 	public function get_frontend_data($post_id)
 	{
 		$selected = fw_get_db_post_option($post_id, 'slider/selected');
 		$population_method = fw_get_db_post_option($post_id, 'slider/'.$selected.'/population-method');
+		$population_method_instance = $this->get_child('population-method-' . $population_method);
 
-		return $this->get_child('population-method-' . $population_method)->get_frontend_data($post_id);
+		if ($population_method_instance) {
+			return $population_method_instance->get_frontend_data($post_id);
+		} else {
+			return array();
+		}
 	}
 
 }
