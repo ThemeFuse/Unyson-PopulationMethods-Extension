@@ -76,6 +76,7 @@ class FW_Extension_Population_Method_Posts extends FW_Extension implements Popul
 				'post_type' => $post_type,
 				'post_status' => 'publish',
 				'meta_key' => '_thumbnail_id',
+				'nopaging' => true
 			));
 	}
 
