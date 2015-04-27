@@ -163,13 +163,25 @@ class FW_Extension_Population_Method_Categories extends FW_Extension implements 
 				);
 			}
 
-			$final_query = array_merge(array(
-					'post_status' => 'publish',
-					'posts_per_page' => $number_of_images,
-					'post_type' => $post_type,
-					'meta_key' => '_thumbnail_id',
-				), $tax_query
+			$attachment_query = array(
+				'post_status' => 'any',
+				'numberposts' => -1,
+				'post_parent' => null,
+				'post_type' => $post_type,
+				'post_mime_type'=>'image',
+
 			);
+
+			$regular_query = array(
+				'numberposts' => -1,
+				'post_status' => 'publish',
+				'posts_per_page' => $number_of_images,
+				'post_type' => $post_type,
+				'meta_key' => '_thumbnail_id',
+			);
+
+			$post_query = ($post_type === 'attachment') ? $attachment_query : $regular_query;
+			$final_query = array_merge( $post_query, $tax_query );
 
 			global $post;
 			$original_post = $post;
