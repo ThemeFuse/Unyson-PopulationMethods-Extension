@@ -139,7 +139,8 @@ class FW_Extension_Population_Method_Posts extends FW_Extension implements Popul
 
 			$posts = get_posts(array(
 				'post__in' => $posts_id,
-				'post_type' => $post_type
+				'post_type' => $post_type,
+				'numberposts' => -1
 			));
 
 			foreach ($posts as $post) {
