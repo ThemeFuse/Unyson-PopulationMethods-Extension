@@ -127,38 +127,46 @@ class FW_Extension_Population_Method_Custom extends FW_Extension implements Popu
 		return count(fw_get_db_post_option($post_id, 'custom-slides', array()));
 	}
 
-	public function get_frontend_data($post_id)
-	{
-		$meta = fw_get_db_post_option($post_id);
-		$post_status = get_post_status($post_id);
+	public function get_frontend_data( $post_id ) {
+		$meta        = fw_get_db_post_option( $post_id );
+		$post_status = get_post_status( $post_id );
 
 		$collector = array();
 
-		if ('publish' === $post_status and isset($meta['populated'])) {
+		if ( 'publish' === $post_status and isset( $meta['populated'] ) ) {
 
-			$slider_name = $meta['slider']['selected'];
-			$population_method = $meta['slider'][$slider_name]['population-method'];
+			$slider_name       = $meta['slider']['selected'];
+			$population_method = $meta['slider'][ $slider_name ]['population-method'];
 
 			$collector = array(
-				'slides' => array(),
+				'slides'   => array(),
 				'settings' => array(
-					'title' => $meta['title'],
-					'slider_type' => $slider_name,
+					'title'             => $meta['title'],
+					'slider_type'       => $slider_name,
 					'population_method' => $population_method,
-					'post_id' => $post_id,
-					'extra' => isset($meta['custom-settings']) ? $meta['custom-settings'] : array(),
+					'post_id'           => $post_id,
+					'extra'             => isset( $meta['custom-settings'] ) ? $meta['custom-settings'] : array(),
 				)
 			);
 
-			foreach ($meta['custom-slides'] as $slide) {
-				array_push($collector['slides'], array(
-					'title' => !empty($slide['title']) ? $slide['title'] : '',
+			foreach ( $meta['custom-slides'] as $slide ) {
+
+				$collector_slide = array(
+					'title'           => ! empty( $slide['title'] ) ? $slide['title'] : '',
 					'multimedia_type' => $slide['multimedia']['selected'],
-					'src' => ($slide['multimedia']['selected'] === 'video') ? $slide['multimedia'][$slide['multimedia']['selected']]['src'] : $slide['multimedia'][$slide['multimedia']['selected']]['src']['url'],
-					'attachment_id' =>($slide['multimedia']['selected'] === 'image') ?$slide['multimedia'][$slide['multimedia']['selected']]['src']['attachment_id']: '',
-					'desc' => !empty($slide['desc']) ? $slide['desc'] : '',
-					'extra' => isset($slide['extra-options']) ? $slide['extra-options'] : array()
-				));
+					'src'             =>
+						( $slide['multimedia']['selected'] === 'image' && ! empty( $slide['multimedia'][ $slide['multimedia']['selected'] ]['src']['url'] ) ) ?
+							$slide['multimedia'][ $slide['multimedia']['selected'] ]['src']['url'] :
+							$slide['multimedia'][ $slide['multimedia']['selected'] ]['src'],
+					'attachment_id'   =>
+						( $slide['multimedia']['selected'] === 'image' && ! empty( $slide['multimedia'][ $slide['multimedia']['selected'] ]['src']['attachment_id'] ) ) ?
+							$slide['multimedia'][ $slide['multimedia']['selected'] ]['src']['attachment_id'] :
+							'',
+					'desc'            => ! empty( $slide['desc'] ) ? $slide['desc'] : '',
+					'extra'           => isset( $slide['extra-options'] ) ? $slide['extra-options'] : array()
+				);
+
+				array_push( $collector['slides'], $collector_slide );
 			}
 		}
 
