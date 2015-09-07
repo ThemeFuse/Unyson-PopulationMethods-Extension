@@ -11,7 +11,7 @@
 <script class="default-thumb" type="text/template">
 	<li data-order="{{=i}}">
 		<div class="delete-btn"></div>
-	<img src="{{=src}}" height="<?php echo $thumb_size['height'] ?>" width="<?php echo $thumb_size['width']?>"/>
+	<img src="{{=src}}" height="<?php echo esc_attr($thumb_size['height']) ?>" width="<?php echo esc_attr($thumb_size['width']) ?>"/>
 		<?php echo fw()->backend->option_type('hidden')->render('thumb', array('value' => '{{=src}}'), array(
 			'id_prefix' => $data['id_prefix'] . $id . '-' . '{{=i}}' . '-',
 			'name_prefix' => $data['name_prefix'] . '[' . $id . '][' . '{{=i}}' . ']',

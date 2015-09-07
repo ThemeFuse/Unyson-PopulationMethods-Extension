@@ -10,16 +10,16 @@
  * @var array  $multimedia_type
  */
 ?>
-<div class="fw-option fw-option-type-<?php echo $type; ?>"
+<div class="fw-option fw-option-type-<?php echo esc_attr($type); ?>"
      data-option="<?php echo fw_htmlspecialchars(json_encode(array('option' => $option, 'data' => $data, 'id' => $id))) ?>">
 	<ul class="thumbs-wrapper">
 		<?php if (isset($values)): ?>
 			<?php foreach ($values as $key => $value): ?>
 				<?php if (in_array($value['multimedia']['selected'], $multimedia_type)): ?>
-					<li data-order="<?php echo $key ?>">
+					<li data-order="<?php echo esc_attr($key) ?>">
 						<div class="delete-btn"></div>
-						<img src="<?php echo $value['thumb'] ?>" height="<?php echo $thumb_size['height'] ?>"
-						     width="<?php echo $thumb_size['width'] ?>"/>
+						<img src="<?php echo esc_attr($value['thumb']) ?>" height="<?php echo esc_attr($thumb_size['height']) ?>"
+						     width="<?php echo esc_attr($thumb_size['width']) ?>"/>
 						<?php echo fw()->backend->option_type('hidden')->render('thumb', array('value' => $value['thumb']), array(
 							'id_prefix' => $data['id_prefix'] . $id . '-' . $key . '-',
 							'name_prefix' => $data['name_prefix'] . '[' . $id . '][' . $key . ']',
@@ -45,7 +45,7 @@
 							'id_prefix' => $data['id_prefix'] . $id . '-' . $key . '-',
 							'name_prefix' => $data['name_prefix'] . '[' . $id . '][' . $key . ']',
 						));?>
-						<div class="fw-slide slide-<?php echo $key ?>" data-order="<?php echo $key ?>"
+						<div class="fw-slide slide-<?php echo esc_attr($key) ?>" data-order="<?php echo esc_attr($key) ?>"
 						     data-default-html="<?php echo fw_htmlspecialchars($options) ?>">
 							<?php echo $options; ?>
 						</div>
