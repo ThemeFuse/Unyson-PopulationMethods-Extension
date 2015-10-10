@@ -27,9 +27,9 @@
 				},
 				templates = {
 					settings: {
-						evaluate: /\{\{(.+?)\}\}/g,
-						interpolate: /\{\{=(.+?)\}\}/g,
-						escape: /\{\{-(.+?)\}\}/g
+						evaluate: /\{\{([\s\S]+?)\}\}/g,
+						interpolate: /\{\{=([\s\S]+?)\}\}/g,
+						escape: /\{\{-([\s\S]+?)\}\}/g
 					},
 					thumb: $(slides_templates).filter('.default-thumb').html(),
 					slide: $(slides_templates).filter('.default-slide').html()
@@ -97,9 +97,9 @@
 								$.trim(templates.thumb),
 								{src: data['src'], i: data['order_id']},
 								{
-									evaluate: /\{\{(.+?)\}\}/g,
-									interpolate: /\{\{=(.+?)\}\}/g,
-									escape: /\{\{-(.+?)\}\}/g
+									evaluate: /\{\{([\s\S]+?)\}\}/g,
+									interpolate: /\{\{=([\s\S]+?)\}\}/g,
+									escape: /\{\{-([\s\S]+?)\}\}/g
 								}
 							)
 						);
