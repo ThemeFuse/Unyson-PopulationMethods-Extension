@@ -80,11 +80,25 @@ class FW_Option_Type_Slides extends FW_Option_Type
 		$js_path = fw()->extensions->get($this->extension_name)->get_declared_URI('/includes/slides/static/js/slides.js');
 		$css_path = fw()->extensions->get($this->extension_name)->get_declared_URI('/includes/slides/static/css/slides.css');
 
+		$template_path = fw()->extensions->get($this->extension_name)->get_declared_path('/includes/slides/views/templates.php');
+
+		$values = $data['value'];
+		$thumb_size = $option['thumb_size'];
+		$slides_options = $option['slides_options'];
+
+		$type = $this->get_type();
+		$template = fw_render_view($template_path, compact('id', 'option', 'thumb_size', 'data', 'values', 'type', 'slides_options'));
+
 		wp_enqueue_script(
 			'fw-option-'. $this->get_type() .'-slides-js',
 			$js_path,
 			array('jquery-ui-sortable','qtip', 'fw'),
 			fw()->manifest->get_version()
+		);
+		wp_localize_script(
+			'fw-option-'. $this->get_type() .'-slides-js',
+			'slides_templates',
+			$template
 		);
 		wp_enqueue_style(
 			'fw-option-'. $this->get_type() .'-slides-css',
@@ -92,6 +106,7 @@ class FW_Option_Type_Slides extends FW_Option_Type
 			array('qtip'),
 			fw()->manifest->get_version()
 		);
+
 	}
 
 	/**
@@ -104,21 +119,11 @@ class FW_Option_Type_Slides extends FW_Option_Type
 	 */
 	protected function _render($id, $option, $data)
 	{
-		$template_path = fw()->extensions->get($this->extension_name)->get_declared_path('/includes/slides/views/templates.php');
-
 		$values = $data['value'];
 		$thumb_size = $option['thumb_size'];
 		$slides_options = $option['slides_options'];
 		$multimedia_type = (array) $option['multimedia_type'];
-
 		$type = $this->get_type();
-		$template = fw_render_view($template_path, compact('id', 'option', 'thumb_size', 'data', 'values', 'type', 'slides_options'));
-
-		wp_localize_script(
-			'fw-option-'. $this->get_type() .'-slides-js',
-			'slides_templates',
-			$template
-		);
 
 		$path = fw()->extensions->get($this->extension_name)->get_declared_path('/includes/slides/views/slides.php');
 
