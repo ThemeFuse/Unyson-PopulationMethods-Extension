@@ -61,11 +61,9 @@
 
 					},
 					appendDefaultSlide: function (slideNumber) {
-						var $compiled = $(_.template(
-							$.trim(templates.slide),
-							{i: slideNumber},
-							templates.settings
-						)).hide();
+						var $compiled = $(
+							_.template($.trim(templates.slide), undefined, templates.settings)({i: slideNumber})
+						).hide();
 
 						$default = elements.$slidesWrapper.find('.default');
 
@@ -95,13 +93,13 @@
 						var $defaultThumb = $(
 							_.template(
 								$.trim(templates.thumb),
-								{src: data['src'], i: data['order_id']},
+								undefined,
 								{
 									evaluate: /\{\{([\s\S]+?)\}\}/g,
 									interpolate: /\{\{=([\s\S]+?)\}\}/g,
 									escape: /\{\{-([\s\S]+?)\}\}/g
 								}
-							)
+							)({src: data['src'], i: data['order_id']})
 						);
 						utils.initQtip($defaultThumb);
 						return $defaultThumb;
