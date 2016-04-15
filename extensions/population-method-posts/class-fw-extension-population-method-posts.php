@@ -149,7 +149,18 @@ class FW_Extension_Population_Method_Posts extends FW_Extension implements Popul
 					'title' => get_the_title($post->ID),
 					'multimedia_type' => $this->multimedia_types[0],
 					'src' => wp_get_attachment_url(get_post_thumbnail_id($post->ID)),
-					'desc' => get_the_excerpt(),
+					/**
+					 * Fixes https://github.com/ThemeFuse/Unyson/issues/1460
+					 * Prevent infinite recursion:
+					 * -> fw_get_db_post_option($post_id)
+					 * -> page-builder all shortcode options loaded for fw-storage param to be processed
+					 * -> slider shortcode options are loaded
+					 * -> get_the_excerpt()
+					 * -> FW_Extension_Page_Builder->_filter_prevent_autop()
+					 * -> fw_get_db_post_option($post_id, 'page-builder/builder_active')
+					 * -> page-builder all shortcode options loaded for fw-storage ... (recursion)
+					 */
+					//'desc' => get_the_excerpt(),
 					'extra' => array(
 						'post_id' => $post->ID
 					)
