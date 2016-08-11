@@ -77,28 +77,15 @@ class FW_Option_Type_Slides extends FW_Option_Type
 	 */
 	protected function _enqueue_static($id, $option, $data)
 	{
-		$js_path = fw()->extensions->get($this->extension_name)->get_declared_URI('/includes/slides/static/js/slides.js');
-		$css_path = fw()->extensions->get($this->extension_name)->get_declared_URI('/includes/slides/static/css/slides.css');
-
-		$template_path = fw()->extensions->get($this->extension_name)->get_declared_path('/includes/slides/views/templates.php');
-
-		$values = $data['value'];
-		$thumb_size = $option['thumb_size'];
-		$slides_options = $option['slides_options'];
-
-		$type = $this->get_type();
-		$template = fw_render_view($template_path, compact('id', 'option', 'thumb_size', 'data', 'values', 'type', 'slides_options'));
+		$ext = fw()->extensions->get($this->extension_name);
+		$js_path = $ext->get_URI('/includes/slides/static/js/slides.js');
+		$css_path = $ext->get_URI('/includes/slides/static/css/slides.css');
 
 		wp_enqueue_script(
 			'fw-option-'. $this->get_type() .'-slides-js',
 			$js_path,
 			array('jquery-ui-sortable','qtip', 'fw'),
 			fw()->manifest->get_version()
-		);
-		wp_localize_script(
-			'fw-option-'. $this->get_type() .'-slides-js',
-			'slides_templates',
-			$template
 		);
 		wp_enqueue_style(
 			'fw-option-'. $this->get_type() .'-slides-css',
@@ -107,6 +94,7 @@ class FW_Option_Type_Slides extends FW_Option_Type
 			fw()->manifest->get_version()
 		);
 
+		fw()->backend->enqueue_options_static($option['slides_options']);
 	}
 
 	/**
@@ -119,15 +107,35 @@ class FW_Option_Type_Slides extends FW_Option_Type
 	 */
 	protected function _render($id, $option, $data)
 	{
-		$values = $data['value'];
-		$thumb_size = $option['thumb_size'];
-		$slides_options = $option['slides_options'];
-		$multimedia_type = (array) $option['multimedia_type'];
-		$type = $this->get_type();
+		$ext = fw()->extensions->get($this->extension_name);
 
-		$path = fw()->extensions->get($this->extension_name)->get_declared_path('/includes/slides/views/slides.php');
-
-		return fw_render_view($path, compact('id', 'option', 'thumb_size', 'data', 'values', 'type', 'slides_options', 'multimedia_type'));
+		return fw_render_view(
+			$ext->get_path('/includes/slides/views/slides.php'),
+			array(
+				'id' => $id,
+				'option' => $option,
+				'data' => $data,
+				'thumb_size' => $option['thumb_size'],
+				'values' => $data['value'],
+				'slides_options' => $option['slides_options'],
+				'multimedia_type' => (array)$option['multimedia_type'],
+				'type' => $this->get_type(),
+				'attr' => array(
+					'data-js-tpl' => fw_render_view(
+						$ext->get_path('/includes/slides/views/templates.php'),
+						array(
+							'id' => $id,
+							'option' => $option,
+							'data' => $data,
+							'values' => $data['value'],
+							'type' => $this->get_type(),
+							'thumb_size' => $option['thumb_size'],
+							'slides_options' => $option['slides_options'],
+						)
+					),
+				),
+			)
+		);
 	}
 
 	/**

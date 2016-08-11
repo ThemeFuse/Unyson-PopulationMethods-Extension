@@ -5,7 +5,7 @@
 (function ($) {
 
 	$.fn.slides = function (options) {
-		var extensionPath =fw.FW_URI+'/extensions/media/extensions/population-method/extensions/population-method-custom/includes/slides/static/images/';
+		var extensionPath = fw.FW_URI +'/extensions/media/extensions/population-method/extensions/population-method-custom/includes/slides/static/images/';
 		var defaults = {
 				'mediaImg': extensionPath+'no_video.jpg',
 				'noDataImg': extensionPath+'no_img.jpg',
@@ -25,14 +25,15 @@
 					$slidesWrapper: $this.find('.fw-slides-wrapper'),
 					$spinner :$this.parents('.postbox').find('.fw-slide-spinner')
 				},
+				$template = $($this.attr('data-js-tpl')),
 				templates = {
 					settings: {
 						evaluate: /\{\{([\s\S]+?)\}\}/g,
 						interpolate: /\{\{=([\s\S]+?)\}\}/g,
 						escape: /\{\{-([\s\S]+?)\}\}/g
 					},
-					thumb: $(slides_templates).filter('.default-thumb').html(),
-					slide: $(slides_templates).filter('.default-slide').html()
+					thumb: $template.filter('.default-thumb').html(),
+					slide: $template.filter('.default-slide').html()
 				},
 				utils = {
 					getSlideElement: function (slideNumber) {
@@ -62,10 +63,14 @@
 					},
 					appendDefaultSlide: function (slideNumber) {
 						var $compiled = $(
-							_.template($.trim(templates.slide), undefined, templates.settings)({i: slideNumber})
+							_.template(
+								$.trim(templates.slide),
+								undefined,
+								templates.settings
+							)({i: slideNumber})
 						).hide();
 
-						$default = elements.$slidesWrapper.find('.default');
+						var $default = elements.$slidesWrapper.find('.default');
 
 						if ($default.length > 0) {
 							$default.slideUp(500, function () {
@@ -113,7 +118,7 @@
 						elements.$optionWrappper.find('.buttons-wrapper').hide();
 					},
 					showControlButtons: function () {
-						$buttonsWrapper = elements.$optionWrappper.find('.buttons-wrapper');
+						var $buttonsWrapper = elements.$optionWrappper.find('.buttons-wrapper');
 						if ($buttonsWrapper.is(':hidden')) {
 							$buttonsWrapper.show();
 						}
@@ -164,23 +169,25 @@
 						utils.initQtip(thumbs);
 						$.each(thumbs, function () {
 							var slideNumber = $(this).data('order');
-							$innerHtml = elements.$slidesWrapper.find('.slide-' + slideNumber).data('default-html');
-							$outer = $('<div class="fw-slide slide-' + slideNumber + '" data-order="' + slideNumber + '">' + $innerHtml + '</div>');
-							cache.slides['slide-' + slideNumber] = $outer;
+
+							cache.slides['slide-' + slideNumber] = $(
+								'<div class="fw-slide slide-' + slideNumber + '" data-order="' + slideNumber + '">'
+								+ elements.$slidesWrapper.find('.slide-' + slideNumber).data('default-html')
+								+ '</div>'
+							);
 						});
 					}
 				},
 				validator = {
 					parseValidUrl: function (src) {
 						//REGEX FROM https://gist.github.com/dperini/729294
-						var regex = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$/i;
-						var regExp = new RegExp(regex);
-						return regExp.test(src);
+						return (
+							/^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$/i
+						).test(src);
 					},
 					parseYouTubeSrc: function (src) {
 						// REGEX FROM http://stackoverflow.com/a/9102270
-						var regex = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-						var matches = src.match(regex);
+						var matches = src.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
 						if (matches && matches[2].length == 11) {
 							return matches[2];
 						}
@@ -195,10 +202,9 @@
 					},
 					parseVimeoSrc: function (src) {
 						//REGEX FROM http://stackoverflow.com/a/2916654
-						var regex = /http:\/\/(www\.)?vimeo.com\/(\d+)($|\/)/;
-						var regex = /https?:\/\/(?:www\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)(?:$|\/|\?)/
-
-						var matches = src.match(regex);
+						var matches = src.match(
+							/https?:\/\/(?:www\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)(?:$|\/|\?)/
+						);
 						if (matches) {
 							return matches[3];
 						}
@@ -305,9 +311,9 @@
 					getCachedSlide: function (slideNumber) {
 						return this.slides['slide-' + slideNumber];
 					}
-				}
+				};
 
-			slidesNumber = elements.$optionWrappper.find('.thumbs-wrapper li').length;
+			var slidesNumber = elements.$optionWrappper.find('.thumbs-wrapper li').length;
 
 			utils.initSlides();
 
@@ -390,7 +396,7 @@
 				utils.getSlideElement(slideNumber).remove();
 			});
 
-			elements.$optionWrappper.on('click', '.add-new-btn', function (e) {
+			elements.$optionWrappper.on('click', '.add-new-btn', function () {
 				if (!$(this).hasClass('new-selected')) {
 					utils.deselectSlides();
 					elements.$optionWrappper.find('li').removeClass('selected');

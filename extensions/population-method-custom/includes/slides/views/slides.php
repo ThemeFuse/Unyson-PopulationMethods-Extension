@@ -8,9 +8,10 @@
  * @var string $type
  * @var array  $slides_options
  * @var array  $multimedia_type
+ * @var array  $attr
  */
 ?>
-<div class="fw-option fw-option-type-<?php echo esc_attr($type); ?>"
+<div class="fw-option fw-option-type-<?php echo esc_attr($type); ?>" <?php echo fw_attr_to_html($attr); ?>
      data-option="<?php echo fw_htmlspecialchars(json_encode(array('option' => $option, 'data' => $data, 'id' => $id))) ?>">
 	<ul class="thumbs-wrapper">
 		<?php if (isset($values)): ?>
