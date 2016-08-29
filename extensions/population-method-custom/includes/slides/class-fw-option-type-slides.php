@@ -9,6 +9,8 @@ class FW_Option_Type_Slides extends FW_Option_Type
 	 */
 	public function _init()
 	{
+		add_action('wp_ajax_cache_slide', array(__CLASS__, '_action_ajax_cache_slide'));
+		add_action('wp_ajax_resize_slide', array(__CLASS__, '_action_ajax_resize_slide'));
 	}
 
 	/**
@@ -186,6 +188,3 @@ class FW_Option_Type_Slides extends FW_Option_Type
 }
 
 FW_Option_Type::register('FW_Option_Type_Slides');
-
-add_action('wp_ajax_cache_slide', array('FW_Option_Type_Slides', '_action_ajax_cache_slide'));
-add_action('wp_ajax_resize_slide', array('FW_Option_Type_Slides', '_action_ajax_resize_slide'));

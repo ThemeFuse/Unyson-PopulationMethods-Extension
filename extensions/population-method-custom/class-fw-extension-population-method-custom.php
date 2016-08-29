@@ -9,6 +9,11 @@ class FW_Extension_Population_Method_Custom extends FW_Extension implements Popu
 	 */
 	public function _init()
 	{
+		add_action('fw_option_types_init', array($this, '_action_option_types_init'));
+	}
+
+	public function _action_option_types_init() {
+		require dirname(__FILE__) .'/includes/slides/class-fw-option-type-slides.php';
 	}
 
 	public function get_multimedia_types()
