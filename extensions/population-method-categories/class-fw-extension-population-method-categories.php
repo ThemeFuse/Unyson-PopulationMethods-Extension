@@ -79,8 +79,10 @@ class FW_Extension_Population_Method_Categories extends FW_Extension implements 
 	private function get_terms($post_type)
 	{
 		$taxonomies = get_taxonomies(array('object_type' => array($post_type), 'hierarchical' => true));
-
-		return get_terms($taxonomies);
+		if (count($taxonomies)) {
+			return get_terms($taxonomies);
+		}
+		return $taxonomies;
 	}
 
 	private function get_post_categories_sets()
