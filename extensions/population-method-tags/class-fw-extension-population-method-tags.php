@@ -79,8 +79,11 @@ class FW_Extension_Population_Method_Tags extends FW_Extension implements Popula
 	private function get_terms($post_type)
 	{
 		$taxonomies = get_taxonomies(array('object_type' => array($post_type), 'hierarchical' => false));
-
-		return get_terms($taxonomies);
+		if (count($taxonomies)) {
+			return get_terms($taxonomies);
+		} else {
+			return $taxonomies;
+		}
 	}
 
 	private function get_post_tags_sets()
