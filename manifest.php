@@ -2,6 +2,6 @@
 
 $manifest['name']        = __( 'Population Methods', 'fw' );
 $manifest['description'] = '';
-$manifest['version'] = '1.0.17';
+$manifest['version'] = '1.0.18';
 
 $manifest['github_update'] = 'ThemeFuse/Unyson-PopulationMethods-Extension';
