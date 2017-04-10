@@ -195,7 +195,7 @@
 					},
 					getYoutubeImgSrc: function (youtubeId) {
 						// http://stackoverflow.com/questions/2068344/how-do-i-get-a-youtube-video-thumbnail-from-the-youtube-api
-						return 'http://img.youtube.com/vi/' + youtubeId + '/mqdefault.jpg';
+						return 'https://img.youtube.com/vi/' + youtubeId + '/mqdefault.jpg';
 					},
 					parseImgSrc: function (src) {
 						return (-1 !== $.inArray(src.split('.').pop().toLowerCase(), settings.imageExtensions));
@@ -214,7 +214,7 @@
 
 						$.ajax({
 							type: 'GET',
-							url: 'http://vimeo.com/api/v2/video/' + data['src'] + '.json',
+							url: 'https://vimeo.com/api/v2/video/' + data['src'] + '.json',
 							jsonp: 'callback',
 							dataType: 'jsonp'
 						}).done(function (response) {
